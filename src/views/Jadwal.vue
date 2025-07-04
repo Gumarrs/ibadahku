@@ -1,6 +1,6 @@
 <template>
   <div class="p-6">
-    <h1 class="text-2xl font-bold text-green-700 mb-4">Jadwal Sholat 7 Hari ke Depan</h1>
+    <h1 class="text-2xl font-bold text-green-700 mb-4">Jadwal Sholat Bulan ini</h1>
     <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
       <thead class="bg-green-600 text-white">
         <tr>
@@ -41,7 +41,7 @@ export default {
         'https://api.aladhan.com/v1/calendarByCity?city=Yogyakarta&country=Indonesia&method=2&month=7&year=2025'
       )
       const data = await response.json()
-      this.schedule = data.data.slice(0, 7) // ambil 7 hari pertama
+      this.schedule = data.data.slice(0, 30) // ambil 7 hari pertama
     } catch (error) {
       console.error('Gagal mengambil jadwal:', error)
     }

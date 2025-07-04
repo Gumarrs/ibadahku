@@ -4,6 +4,7 @@ import Dashboard from '@/views/Dashboard.vue'
 import Jadwal from '@/views/Jadwal.vue'
 import Kiblat from '@/views/Kiblat.vue'
 import Kalender from '@/views/Kalender.vue'
+import DoaView from '@/views/DoaView.vue'
 
 const routes = [
   {
@@ -29,7 +30,8 @@ const routes = [
         path: 'kalender',
         name: 'Kalender',
         component: Kalender
-      }
+      },
+       { path: '/doa', name: 'Doa & Dzikir', component: DoaView },
     ]
   }
 ]
