@@ -1,11 +1,16 @@
 <template>
-  <footer class="bg-white text-center py-2 text-sm text-gray-500 shadow-inner">
-    &copy; {{ new Date().getFullYear() }} Jadwal Sholat App — Made with ❤️ by Agus
+  <footer class="bg-gray-50 border-t border-gray-200 text-center py-4 text-sm text-gray-600">
+    &copy; {{ year }} Ibadahku — Aplikasi Muslim Harian | Dibuat dengan amanah oleh <strong class="text-green-700">Agus Marsadualan</strong>
   </footer>
 </template>
 
 <script>
 export default {
-  name: 'Footer'
+  name: 'Footer',
+  data() {
+    return {
+      year: new Date().getFullYear()
+    }
+  }
 }
 </script>

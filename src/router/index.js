@@ -5,6 +5,8 @@ import Jadwal from '@/views/Jadwal.vue'
 import Kiblat from '@/views/Kiblat.vue'
 import Kalender from '@/views/Kalender.vue'
 import DoaView from '@/views/DoaView.vue'
+import MasjidView from '@/views/MasjidView.vue'
+
 
 const routes = [
   {
@@ -32,6 +34,11 @@ const routes = [
         component: Kalender
       },
        { path: '/doa', name: 'Doa & Dzikir', component: DoaView },
+       {
+        path: 'masjid',
+        name: 'Masjid Terdekat',
+        component: MasjidView
+        }
     ]
   }
 ]
