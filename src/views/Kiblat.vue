@@ -5,13 +5,28 @@
 
     <!-- Kompas -->
     <div class="relative mx-auto aspect-square w-64 max-w-full rounded-full border-4 border-green-500 flex items-center justify-center">
-      <div class="w-2 h-2 bg-green-800 rounded-full z-10"></div>
+      <!-- Titik pusat -->
+      <div class="absolute w-4 h-4 bg-green-800 rounded-full z-10"></div>
 
       <!-- Jarum arah kiblat -->
       <div
-        class="absolute w-1 h-32 bg-green-600 origin-bottom transition-transform duration-500"
-        :style="{ transform: `rotate(${kiblatDirection}deg)` }"
+        class="absolute top-1/2 left-1/2 w-1 h-[40%] bg-green-600 origin-bottom translate-x-[-50%] translate-y-[-100%] transition-transform duration-500 ease-in-out"
+        :style="{ transform: `translate(-50%, -100%) rotate(${kiblatDirection}deg)` }"
       ></div>
+
+      <!-- Label Arah Kompas -->
+      <div
+        v-for="(dir, index) in directions"
+        :key="dir.label"
+        class="absolute text-[10px] sm:text-xs font-bold text-gray-500"
+        :style="{
+          top: '50%',
+          left: '50%',
+          transform: `translate(-50%, -50%) rotate(${index * 45}deg) translateY(-110px) rotate(${-index * 45}deg)`
+        }"
+      >
+        {{ dir.label }}
+      </div>
     </div>
 
     <!-- Keterangan -->
@@ -29,6 +44,10 @@ export default {
     return {
       kiblatDirection: 0,
       city: '',
+      directions: [
+        { label: 'N' }, { label: 'NE' }, { label: 'E' }, { label: 'SE' },
+        { label: 'S' }, { label: 'SW' }, { label: 'W' }, { label: 'NW' }
+      ]
     };
   },
   mounted() {
@@ -64,7 +83,6 @@ export default {
 
       this.kiblatDirection = direction;
 
-      // Ambil nama kota (opsional)
       try {
         const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latUser}&lon=${lonUser}`);
         const data = await response.json();
@@ -79,3 +97,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Tambahan opsional jika ingin efek glowing */
+</style>

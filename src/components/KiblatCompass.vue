@@ -1,93 +1,103 @@
 <template>
-  <div class="text-center p-6 bg-white rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold text-green-700 mb-2">🧭 Arah Kiblat</h2>
-    <p class="text-sm text-gray-600 mb-4">Lokasi: {{ city || 'Mendeteksi lokasi...' }}</p>
+  <div class="p-6 max-w-xl mx-auto text-center bg-white rounded-xl shadow-lg space-y-4">
+    <h1 class="text-2xl font-bold text-green-700">🧭 Arah Kiblat</h1>
+    <p class="text-sm text-gray-500">Lokasi: {{ city || 'Mendeteksi lokasi...' }}</p>
 
-    <div
-      v-if="kiblatDirection !== null"
-      class="relative mx-auto w-64 max-w-full aspect-square rounded-full border-4 border-green-500 flex items-center justify-center"
-    >
-      <!-- Titik tengah -->
-      <div class="w-2 h-2 bg-green-800 rounded-full z-10"></div>
+    <!-- Kompas -->
+    <div class="relative mx-auto aspect-square w-64 max-w-full rounded-full border-4 border-green-500 flex items-center justify-center">
+      <!-- Titik pusat -->
+      <div class="absolute w-4 h-4 bg-green-800 rounded-full z-10"></div>
 
-      <!-- Jarum kiblat -->
+      <!-- Jarum arah kiblat -->
       <div
-        class="absolute w-1 h-32 bg-green-600 origin-bottom"
-        :style="{ transform: `rotate(${kiblatDirection}deg)` }"
+        class="absolute top-1/2 left-1/2 w-1 h-[40%] bg-green-600 origin-bottom translate-x-[-50%] translate-y-[-100%] transition-transform duration-500 ease-in-out"
+        :style="{ transform: `translate(-50%, -100%) rotate(${kiblatDirection}deg)` }"
       ></div>
+
+      <!-- Label Arah Kompas -->
+      <div
+        v-for="(dir, index) in directions"
+        :key="dir.label"
+        class="absolute text-[10px] sm:text-xs font-bold text-gray-500"
+        :style="{
+          top: '50%',
+          left: '50%',
+          transform: `translate(-50%, -50%) rotate(${index * 45}deg) translateY(-110px) rotate(${-index * 45}deg)`
+        }"
+      >
+        {{ dir.label }}
+      </div>
     </div>
 
-    <p v-if="kiblatDirection !== null" class="mt-4 text-gray-700">
-      Arah kiblat: <strong>{{ kiblatDirection.toFixed(2) }}°</strong> dari utara
+    <!-- Keterangan -->
+    <p class="text-gray-700">
+      Arah kiblat dari lokasi kamu adalah sekitar
+      <strong>{{ kiblatDirection.toFixed(2) }}°</strong> dari utara.
     </p>
-    <p v-else class="text-red-500 mt-4">Gagal mendeteksi arah kiblat.</p>
   </div>
 </template>
 
-
 <script>
 export default {
+  name: 'KiblatView',
   data() {
     return {
-      userLat: null,
-      userLng: null,
-      kiblatDirection: null,
-      city: null,
-    }
+      kiblatDirection: 0,
+      city: '',
+      directions: [
+        { label: 'N' }, { label: 'NE' }, { label: 'E' }, { label: 'SE' },
+        { label: 'S' }, { label: 'SW' }, { label: 'W' }, { label: 'NW' }
+      ]
+    };
   },
   mounted() {
-    this.getLocation()
+    this.getLocation();
   },
   methods: {
     getLocation() {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          position => {
-            this.userLat = position.coords.latitude
-            this.userLng = position.coords.longitude
-            this.getCityName()
-            this.calculateQibla()
-          },
-          error => {
-            console.error('Gagal mendeteksi lokasi:', error)
-          }
-        )
+        navigator.geolocation.getCurrentPosition(this.calculateKiblat, this.handleError);
       } else {
-        alert('Geolocation tidak didukung di browser ini.')
+        alert('Geolocation tidak didukung oleh browser ini.');
       }
     },
-    calculateQibla() {
-      const kaabaLat = 21.4225
-      const kaabaLng = 39.8262
+    async calculateKiblat(position) {
+      const latUser = position.coords.latitude;
+      const lonUser = position.coords.longitude;
 
-      const φ1 = this.deg2rad(this.userLat)
-      const φ2 = this.deg2rad(kaabaLat)
-      const Δλ = this.deg2rad(kaabaLng - this.userLng)
+      const latKaaba = 21.4225;
+      const lonKaaba = 39.8262;
 
-      const y = Math.sin(Δλ) * Math.cos(φ2)
+      const phiUser = (latUser * Math.PI) / 180;
+      const phiKaaba = (latKaaba * Math.PI) / 180;
+      const deltaLambda = ((lonKaaba - lonUser) * Math.PI) / 180;
+
+      const y = Math.sin(deltaLambda) * Math.cos(phiKaaba);
       const x =
-        Math.cos(φ1) * Math.sin(φ2) -
-        Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ)
-      const θ = Math.atan2(y, x)
-      const bearing = (this.rad2deg(θ) + 360) % 360
+        Math.cos(phiUser) * Math.sin(phiKaaba) -
+        Math.sin(phiUser) * Math.cos(phiKaaba) * Math.cos(deltaLambda);
 
-      this.kiblatDirection = bearing
-    },
-    deg2rad(deg) {
-      return (deg * Math.PI) / 180
-    },
-    rad2deg(rad) {
-      return (rad * 180) / Math.PI
-    },
-    async getCityName() {
+      const theta = Math.atan2(y, x);
+      let direction = (theta * 180) / Math.PI;
+      if (direction < 0) direction += 360;
+
+      this.kiblatDirection = direction;
+
       try {
-        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${this.userLat}&lon=${this.userLng}`)
-        const data = await res.json()
-        this.city = data.address.city || data.address.town || data.address.village || 'Tidak diketahui'
-      } catch (e) {
-        console.warn('Gagal mengambil nama kota:', e)
+        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latUser}&lon=${lonUser}`);
+        const data = await response.json();
+        this.city = data.address.city || data.address.town || data.address.village || 'Lokasi tidak diketahui';
+      } catch {
+        this.city = 'Lokasi tidak diketahui';
       }
-    }
-  }
-}
+    },
+    handleError(error) {
+      alert('Gagal mendeteksi lokasi: ' + error.message);
+    },
+  },
+};
 </script>
+
+<style scoped>
+/* Tambahan opsional jika ingin efek glowing */
+</style>
