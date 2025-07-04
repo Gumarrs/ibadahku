@@ -1,7 +1,7 @@
 <template>
   <div class="w-64 bg-white shadow-md h-full">
     <div class="p-6 text-xl font-bold text-green-700">
-      Jadwal Sholat 🕌
+      Ibadahku 🕌
     </div>
     <nav class="px-4">
       <router-link
