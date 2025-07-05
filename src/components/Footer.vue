@@ -1,6 +1,6 @@
 <template>
   <footer class="bg-gray-50 border-t border-gray-200 text-center py-4 text-sm text-gray-600">
-    &copy; {{ year }} Ibadahku — Aplikasi Muslim Harian | Dibuat dengan amanah oleh <strong class="text-green-700">Agus Marsadualan</strong>
+    &copy; {{ year }} Copyright | <strong class="text-green-700">Agus Marsadualan</strong>
   </footer>
 </template>
 
