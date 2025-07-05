@@ -1,21 +1,26 @@
 <template>
-  <div class="bg-white rounded-lg shadow-md p-4">
-    <h2 class="text-xl font-bold text-green-700 mb-4">🕌 Masjid Terdekat</h2>
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+    <h2 class="text-xl font-bold text-green-700 dark:text-green-400 mb-4">🕌 Masjid Terdekat</h2>
 
-    <div v-if="loading" class="text-gray-500">🔄 Mendeteksi lokasi & mencari masjid...</div>
-    <div v-else-if="error" class="text-red-500">⚠️ {{ error }}</div>
-    
-    <ul v-else class="space-y-3">
+    <div v-if="loading" class="text-gray-500 dark:text-gray-400">
+      🔄 Mendeteksi lokasi & mencari masjid...
+    </div>
+
+    <div v-else-if="error" class="text-red-500 dark:text-red-400">
+      ⚠️ {{ error }}
+    </div>
+
+    <ul v-else class="space-y-2">
       <li
         v-for="(mosque, index) in mosques"
         :key="index"
         @click="openInMaps(mosque.lat, mosque.lon)"
-        class="bg-gray-50 p-3 rounded-md shadow-sm cursor-pointer hover:bg-green-50 transition"
+        class="cursor-pointer bg-gray-50 hover:bg-green-50 text-gray-700 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-green-100 transition p-2 rounded-md shadow-sm"
       >
-        <p class="text-green-700 font-semibold">
+        <p class="text-green-700 dark:text-green-400 font-semibold">
           {{ mosque.name || 'Masjid Tanpa Nama' }}
         </p>
-        <p class="text-sm text-gray-600">
+        <p class="text-sm text-gray-600 dark:text-gray-300">
           Jarak: {{ mosque.distance.toFixed(1) }} km
         </p>
       </li>
@@ -25,6 +30,7 @@
 
 <script>
 export default {
+  name: 'NearbyMosques',
   data() {
     return {
       userLat: null,
@@ -58,8 +64,7 @@ export default {
       }
     },
     async fetchNearbyMosques() {
-      const radius = 2000 // radius pencarian dalam meter
-      const overpassUrl = 'https://overpass-api.de/api/interpreter'
+      const radius = 2000 // meter
       const query = `
         [out:json];
         (
@@ -69,7 +74,7 @@ export default {
       `
 
       try {
-        const res = await fetch(overpassUrl, {
+        const res = await fetch('https://overpass-api.de/api/interpreter', {
           method: 'POST',
           body: query,
         })
@@ -90,15 +95,14 @@ export default {
       }
     },
     calculateDistance(lat2, lon2) {
-      const R = 6371 // Radius bumi dalam km
+      const R = 6371 // km
       const dLat = this.deg2rad(lat2 - this.userLat)
       const dLon = this.deg2rad(lon2 - this.userLng)
       const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLat / 2) ** 2 +
         Math.cos(this.deg2rad(this.userLat)) *
-          Math.cos(this.deg2rad(lat2)) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2)
+        Math.cos(this.deg2rad(lat2)) *
+        Math.sin(dLon / 2) ** 2
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
       return R * c
     },
@@ -106,9 +110,8 @@ export default {
       return deg * (Math.PI / 180)
     },
     openInMaps(lat, lon) {
-      const url = `https://www.google.com/maps?q=${lat},${lon}`
-      window.open(url, '_blank')
-    },
-  },
+      window.open(`https://www.google.com/maps?q=${lat},${lon}`, '_blank')
+    }
+  }
 }
 </script>

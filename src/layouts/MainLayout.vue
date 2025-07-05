@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen bg-gradient-to-br from-white to-green-50 text-gray-800">
+  <div class="flex h-screen bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100">
     <!-- Sidebar -->
     <Sidebar />
 
@@ -9,7 +9,7 @@
       <Header />
 
       <!-- Page Content -->
-      <main class="flex-1 overflow-y-auto px-4 py-6 bg-white">
+      <main class="flex-1 overflow-y-auto px-4 py-6 bg-white dark:bg-gray-800">
         <router-view />
       </main>
 
@@ -35,7 +35,6 @@ export default {
 </script>
 
 <style scoped>
-/* Reset padding dan font */
 body, html, #app {
   margin: 0;
   padding: 0;

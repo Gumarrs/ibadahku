@@ -1,21 +1,18 @@
 <template>
-  <div class="bg-gradient-to-br from-green-100 to-white p-6 rounded-xl shadow-lg max-w-3xl mx-auto border border-green-200">
-    <div class="flex items-center justify-between mb-4">
+  <div class="bg-gradient-to-br from-green-100 to-white dark:from-gray-900 dark:to-gray-800 p-6 rounded-xl shadow-lg max-w-3xl mx-auto border border-green-200 dark:border-gray-700 transition-colors">
+    <div  class="mb-4 text-center">
       <div>
-        <h2 class="text-3xl font-bold text-green-800">{{ hijriMonthName }} {{ hijriYear }}</h2>
-        <p class="text-sm text-gray-600">Kalender Hijriah + Jadwal Puasa Sunnah</p>
+        <h2 class="text-3xl font-bold text-green-800 dark:text-green-300">{{ hijriMonthName }} {{ hijriYear }}</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Kalender Hijriah + Jadwal Puasa Sunnah</p>
       </div>
+      <hr class="my-4 border-t border-green-300 dark:border-green-700" />
       <div>
-        <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" stroke-width="1.5"
-             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round"
-                d="M3.75 5.25v13.5h16.5V5.25M8.25 2.25v3M15.75 2.25v3M3.75 9.75h16.5"></path>
-        </svg>
+
       </div>
     </div>
 
     <!-- Days Header -->
-    <div class="grid grid-cols-7 gap-2 text-center text-sm font-semibold text-gray-700 mb-2">
+    <div class="grid grid-cols-7 gap-2 text-center text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
       <div v-for="day in daysOfWeek" :key="day" class="py-1">{{ day }}</div>
     </div>
 
@@ -26,12 +23,12 @@
       <div
         v-for="day in daysInMonth"
         :key="day.date"
-        class="p-2 h-16 flex items-center justify-center text-sm text-center rounded-lg border cursor-pointer transition-all"
+        class="p-2 h-16 flex items-center justify-center text-sm text-center rounded-lg border border-green-100 dark:border-gray-700 cursor-pointer transition-all"
         :class="{
-          'bg-green-100 text-green-800 font-bold ring-2 ring-green-400': day.isToday,
-          'bg-yellow-100 text-yellow-800': day.isAyyamulBidh,
-          'bg-blue-100 text-blue-800': day.isSeninKamis,
-          'hover:bg-green-50': !day.isToday
+          'bg-green-100 text-green-800 font-bold ring-2 ring-green-400 dark:bg-green-900 dark:text-green-200 dark:ring-green-500': day.isToday,
+          'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300': day.isAyyamulBidh,
+          'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300': day.isSeninKamis,
+          'hover:bg-green-50 dark:hover:bg-green-800': !day.isToday
         }"
         :title="day.tooltip"
       >
@@ -42,11 +39,12 @@
       </div>
     </div>
 
-    <p class="mt-6 text-center text-sm text-gray-500">
-      Hari ini: <span class="font-semibold text-green-700">{{ hijriToday }}</span>
+    <p class="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+      Hari ini: <span class="font-semibold text-green-700 dark:text-green-300">{{ hijriToday }}</span>
     </p>
   </div>
 </template>
+
 
 <script>
 import moment from 'moment-hijri'

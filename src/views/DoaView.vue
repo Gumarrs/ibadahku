@@ -1,21 +1,26 @@
-<!-- File: src/views/DoaView.vue -->
 <template>
-  <div class="p-6 space-y-6">
-    <h1 class="text-2xl font-bold text-green-700 mb-4">📖 Doa & Dzikir Harian</h1>
+  <div class="p-6 space-y-6 bg-white dark:bg-gray-900 min-h-screen transition-colors duration-300">
+    <!-- Judul -->
+    <h1 class="text-2xl font-bold text-green-700 dark:text-green-400">📖 Doa & Dzikir Harian</h1>
 
     <!-- Tabs -->
-    <div class="flex flex-wrap gap-2 border-b pb-3">
+    <div class="flex flex-wrap gap-2 border-b border-gray-200 dark:border-gray-700 pb-3">
       <button
         v-for="tab in tabs"
         :key="tab"
         @click="selectedTab = tab"
-        :class="[selectedTab === tab ? 'text-green-700 border-b-2 border-green-700' : 'text-gray-600 hover:text-green-600', 'pb-1 px-3 font-semibold transition']"
+        :class="[
+          'pb-1 px-3 font-semibold transition',
+          selectedTab === tab
+            ? 'text-green-700 dark:text-green-400 border-b-2 border-green-700 dark:border-green-400'
+            : 'text-gray-600 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400'
+        ]"
       >
         {{ tab }}
       </button>
     </div>
 
-    <!-- Tab Content -->
+    <!-- Konten Tab -->
     <div class="space-y-4">
       <div v-if="selectedTab === 'Doa Pagi & Petang'">
         <DoaDzikir v-for="item in doaPagiPetang" :key="item.id" :item="item" />

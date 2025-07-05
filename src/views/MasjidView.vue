@@ -1,8 +1,8 @@
 <!-- src/views/MasjidView.vue -->
 <template>
   <div class="p-6 max-w-5xl mx-auto space-y-6">
-    <div class="bg-white rounded-xl shadow-md p-4">
-      <h2 class="text-xl font-bold text-green-700 mb-4">🗺️ Peta Masjid Terdekat</h2>
+    <div class="bg-white dark:bg-gray-900 rounded-xl shadow-md p-4">
+      <h2 class="text-xl font-bold text-green-700 dark:text-green-400 mb-4">🗺️ Peta Masjid Terdekat</h2>
       <div id="map" class="w-full h-96 rounded-lg shadow-inner"></div>
     </div>
 

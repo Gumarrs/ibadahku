@@ -1,16 +1,16 @@
 <template>
-  <div class="p-6 max-w-xl mx-auto text-center bg-white rounded-xl shadow-lg space-y-4">
-    <h1 class="text-2xl font-bold text-green-700">🧭 Arah Kiblat</h1>
-    <p class="text-sm text-gray-500">Lokasi: {{ city || 'Mendeteksi lokasi...' }}</p>
+  <div class="p-6 max-w-xl mx-auto text-center bg-white dark:bg-gray-800 dark:text-gray-300 rounded-xl shadow-lg space-y-4">
+    <h1 class="text-2xl font-bold text-green-700 dark:text-green-400">🧭 Arah Kiblat</h1>
+    <p class="text-sm text-gray-500 dark:text-gray-300">Lokasi: {{ city || 'Mendeteksi lokasi...' }}</p>
 
     <!-- Kompas -->
     <div class="relative mx-auto aspect-square w-64 max-w-full rounded-full border-4 border-green-500 flex items-center justify-center">
       <!-- Titik pusat -->
-      <div class="absolute w-4 h-4 bg-green-800 rounded-full z-10"></div>
+      <div class="absolute w-4 h-4 bg-green-800 dark:text-green-400 rounded-full z-10"></div>
 
       <!-- Jarum arah kiblat -->
       <div
-        class="absolute top-1/2 left-1/2 w-1 h-[40%] bg-green-600 origin-bottom translate-x-[-50%] translate-y-[-100%] transition-transform duration-500 ease-in-out"
+        class="absolute top-1/2 left-1/2 w-1 h-[40%] bg-green-600 dark:text-green-400 origin-bottom translate-x-[-50%] translate-y-[-100%] transition-transform duration-500 ease-in-out"
         :style="{ transform: `translate(-50%, -100%) rotate(${kiblatDirection}deg)` }"
       ></div>
 
@@ -18,7 +18,7 @@
       <div
         v-for="(dir, index) in directions"
         :key="dir.label"
-        class="absolute text-[10px] sm:text-xs font-bold text-gray-500"
+        class="absolute text-[10px] sm:text-xs font-bold text-gray-500 dark:text-gray-300"
         :style="{
           top: '50%',
           left: '50%',
@@ -30,7 +30,7 @@
     </div>
 
     <!-- Keterangan -->
-    <p class="text-gray-700">
+    <p class="text-gray-700 dark:text-gray-300">
       Arah kiblat dari lokasi kamu adalah sekitar
       <strong>{{ kiblatDirection.toFixed(2) }}°</strong> dari utara.
     </p>

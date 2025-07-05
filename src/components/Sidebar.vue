@@ -1,22 +1,22 @@
 <template>
-  <div class="flex h-screen bg-gray-50">
+  <div class="flex h-screen bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
     <!-- Sidebar -->
     <aside
       :class="[
-        'fixed md:static z-40 md:z-auto top-0 left-0 w-64 h-full bg-white shadow-md transition-transform duration-300',
+        'fixed md:static z-40 md:z-auto top-0 left-0 w-64 h-full bg-white dark:bg-gray-800 shadow-md transition-transform duration-300',
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
       ]"
     >
-      <div class="p-5 border-b border-gray-200">
-        <h1 class="text-lg font-bold text-green-700">🕌 Ibadahku</h1>
+      <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+        <h1 class="text-lg font-bold text-green-700 dark:text-green-400">🕌 Ibadahku</h1>
       </div>
       <nav class="mt-4 space-y-1 px-4">
         <router-link
           v-for="link in navLinks"
           :key="link.to"
           :to="link.to"
-          class="block py-2 px-3 rounded hover:bg-green-100"
-          active-class="bg-green-200 text-green-800 font-semibold"
+          class="block py-2 px-3 rounded hover:bg-green-100 dark:hover:bg-green-700"
+          active-class="bg-green-200 dark:bg-green-600 text-green-800 dark:text-white font-semibold"
           exact
         >
           {{ link.label }}
@@ -34,14 +34,14 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col">
       <!-- Topbar Mobile -->
-      <header class="md:hidden bg-white px-4 py-3 shadow flex items-center justify-between">
-        <button @click="toggleSidebar" class="text-green-600">
+      <header class="md:hidden bg-white dark:bg-gray-800 px-4 py-3 shadow flex items-center justify-between">
+        <button @click="toggleSidebar" class="text-green-600 dark:text-green-300">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 6h16M4 12h16M4 18h16"/>
+               viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-        <span class="font-semibold text-green-700">Ibadahku</span>
+        <span class="font-semibold text-green-700 dark:text-green-400">Ibadahku</span>
         <div class="w-6"></div>
       </header>
 

@@ -1,11 +1,16 @@
 <template>
-  <div class="bg-white rounded-lg shadow p-4 text-center">
-    <h2 class="text-xl font-bold text-green-700 mb-2">📅 Hari Ini</h2>
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center">
+    <h2 class="text-xl font-bold text-green-700 dark:text-green-400 mb-2">📅 Hari Ini</h2>
 
-    <div v-if="loading" class="text-gray-500">Memuat tanggal...</div>
+    <div v-if="loading" class="text-gray-500 dark:text-gray-300">Memuat tanggal...</div>
+
     <div v-else>
-      <p class="text-lg font-semibold text-gray-800">{{ today.gregorian.full }}</p>
-      <p class="text-sm text-gray-600 italic">{{ today.hijri.full }}</p>
+      <p class="text-lg font-semibold text-gray-800 dark:text-gray-200">
+        {{ today.gregorian.full }}
+      </p>
+      <p class="text-sm text-gray-600 dark:text-gray-300 italic">
+        {{ today.hijri.full }}
+      </p>
     </div>
   </div>
 </template>
@@ -15,12 +20,8 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 
 const today = ref({
-  gregorian: {
-    full: ''
-  },
-  hijri: {
-    full: ''
-  }
+  gregorian: { full: '' },
+  hijri: { full: '' }
 })
 
 const loading = ref(true)
@@ -37,10 +38,10 @@ onMounted(async () => {
 
     today.value = {
       gregorian: {
-        full: `${g.weekday.en}, ${g.day} ${g.month.en} ${g.year}` // Contoh: Friday, 04 July 2025
+        full: `${g.weekday.en}, ${g.day} ${g.month.en} ${g.year}`
       },
       hijri: {
-        full: `${h.weekday.ar} / ${h.day} ${h.month.ar} ${h.year} هـ` // Contoh: الجمعة / 27 ذو الحجة 1446 هـ
+        full: `${h.weekday.ar} / ${h.day} ${h.month.ar} ${h.year} هـ`
       }
     }
   } catch (e) {

@@ -1,17 +1,20 @@
 <!-- File: src/components/PrayerTimeCard.vue -->
 <template>
-  <div class="bg-white rounded-lg shadow p-4 text-center">
-    <h2 class="text-xl font-semibold text-green-700 mb-1">🕌 Waktu Sholat</h2>
-    <p class="text-gray-600 text-sm mb-3">Kota: Yogyakarta, Indonesia</p>
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center">
+    <h2 class="text-xl font-semibold text-green-700 dark:text-green-400 mb-1">🕌 Waktu Sholat</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+      Kota: Yogyakarta, Indonesia
+    </p>
 
     <div class="grid grid-cols-1 gap-3 text-left">
       <div
         v-for="(time, name) in prayerTimes"
         :key="name"
-        class="flex justify-between bg-gray-50 rounded-md px-3 py-2 shadow-sm"
+        class="flex justify-between items-center px-3 py-2 rounded-md shadow-sm transition
+               bg-gray-50 hover:bg-green-50 text-gray-700 dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-green-100"
       >
-        <span class="text-gray-700 font-medium">{{ name }}</span>
-        <span class="text-green-700 font-semibold">{{ time }}</span>
+        <span class="font-medium">{{ name }}</span>
+        <span class="text-green-700 dark:text-green-400 font-semibold">{{ time }}</span>
       </div>
     </div>
   </div>
@@ -29,7 +32,7 @@ onMounted(async () => {
       params: {
         city: 'Yogyakarta',
         country: 'Indonesia',
-        method: 2
+        method: 2 // metode Ummul Qura
       }
     })
 

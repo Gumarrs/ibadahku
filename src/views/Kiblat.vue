@@ -1,7 +1,7 @@
 <template>
-  <div class="p-6 max-w-xl mx-auto text-center bg-white rounded-xl shadow-lg space-y-4">
-    <h1 class="text-2xl font-bold text-green-700">🧭 Arah Kiblat</h1>
-    <p class="text-sm text-gray-500">Lokasi: {{ city || 'Mendeteksi lokasi...' }}</p>
+  <div class="p-6 max-w-xl mx-auto text-center bg-white dark:bg-gray-900 rounded-xl shadow-lg space-y-4">
+    <h1 class="text-2xl font-bold text-green-700 dark:text-green-400">🧭 Arah Kiblat</h1>
+    <p class="text-sm text-gray-500 dark:text-gray-300">Lokasi: {{ city || 'Mendeteksi lokasi...' }}</p>
 
     <!-- Kompas -->
     <div class="relative mx-auto aspect-square w-64 max-w-full rounded-full border-4 border-green-500 flex items-center justify-center">
@@ -18,7 +18,7 @@
       <div
         v-for="(dir, index) in directions"
         :key="dir.label"
-        class="absolute text-[10px] sm:text-xs font-bold text-gray-500"
+        class="absolute text-[10px] sm:text-xs font-bold text-gray-500 dark:text-gray-300"
         :style="{
           top: '50%',
           left: '50%',
@@ -30,9 +30,9 @@
     </div>
 
     <!-- Keterangan -->
-    <p class="text-gray-700">
+    <p class="text-gray-700 dark:text-gray-200">
       Arah kiblat dari lokasi kamu adalah sekitar
-      <strong>{{ kiblatDirection.toFixed(2) }}°</strong> dari utara.
+      <strong class="text-green-700 dark:text-green-400">{{ kiblatDirection.toFixed(2) }}°</strong> dari utara.
     </p>
   </div>
 </template>
@@ -97,7 +97,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* Tambahan opsional jika ingin efek glowing */
-</style>
